@@ -10,3 +10,11 @@ There are two ways to implement a stack:
 Using array
 Using linked list
 
+Applications of stack:
+Balancing of symbols:
+Infix to Postfix/Prefix conversion
+Redo-undo features at many places like editors, photoshop.
+Forward and backward feature in web browsers
+Used in many algorithms like Tower of Hanoi, tree traversals, STOCK span problem, histogram problem.
+Other applications can be Backtracking, Knight tour problem, rat in a maze, N queen problem and sudoku solver
+We will cover the implementation of applications of stack in separate posts.

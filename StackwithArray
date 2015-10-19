@@ -1,0 +1,186 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DSAppln
+{
+    class StackArray : StackADT
+    {
+        private int stacksize = 0;
+        private object[] ObjItems;
+        int top = -1;
+        public StackArray(int stkSize)
+        {
+            stacksize = stkSize;
+            ObjItems = new object[stacksize];
+        }
+
+        public void Push(object val)
+        {
+            if (!IsFull())
+            {
+                ObjItems[++top] = val;
+            }
+        }
+
+        public object Pop()
+        {
+            if (!IsEmpty())
+            {
+                int data = Convert.ToInt32(ObjItems[top--]);
+                return data;
+            }
+
+            throw new Exception("Stack is empty");
+        }
+
+        public bool IsEmpty()
+        {
+            return top == -1 ? true : false;
+        }
+
+        public bool IsFull()
+        {
+            return top == stacksize - 1 ? true : false;
+        }
+
+        public object Peek()
+        {
+            int data = Convert.ToInt32(ObjItems[top]);
+            return data;
+        }
+
+        public System.Collections.ArrayList Display()
+        {
+            ArrayList list = new ArrayList();
+            for (int index = 0; index < top; index++ )
+            {
+                int data = Convert.ToInt32(ObjItems[index]);
+                list.Add(data);
+                
+            }
+
+            return list;
+        }
+    }
+}
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections;
+
+namespace DSAppln
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            TestStackArray();
+            //TestStack();
+        }
+
+        static void TestStack()
+        {
+            StackADT stack = new TestStack();
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+
+            ArrayList list = stack.Display();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
+            }
+            Console.WriteLine();
+            stack.Pop();
+
+
+            list = stack.Display();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
+            }
+            Console.WriteLine();
+            stack.Peek();
+
+            list = stack.Display();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
+            }
+            Console.WriteLine();
+
+            stack.Pop();
+            stack.Pop();
+            stack.Pop();
+            //stack.Pop();
+
+            list = stack.Display();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
+            }
+            Console.WriteLine();
+
+            Console.Read();
+        }
+
+
+        static void TestStackArray()
+        {
+            StackADT stack = new StackArray(10);
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+
+            ArrayList list = stack.Display();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
+            }
+            Console.WriteLine();
+            stack.Pop();
+
+
+            list = stack.Display();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
+            }
+            Console.WriteLine();
+            stack.Peek();
+
+            list = stack.Display();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
+            }
+            Console.WriteLine();
+
+            stack.Pop();
+            stack.Pop();
+            stack.Pop();
+            //stack.Pop();
+
+            list = stack.Display();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.Write(list[i] + " ");
+            }
+            Console.WriteLine();
+
+            Console.Read();
+        }
+    }
+}

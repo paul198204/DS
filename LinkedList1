@@ -296,3 +296,244 @@ class Program
             Console.ReadLine();
         }
     }
+
+
+////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            TestLinkedList list = new TestLinkedList();
+            list.AddData(1);
+            list.AddData(0);
+            list.AddData(1);
+            list.AddData(0);
+            list.AddData(1);
+            list.AddData(0);
+
+            ArrayList list1 = list.GetNodes();
+            for (int i = 0; i < list1.Count; i++)
+            {
+                Console.Write(list1[i].ToString() + "-->");
+            }
+            Console.WriteLine();
+            //list.DeleteAlternateNodes(list.HeadNode);
+           // list.RecursiveDeleteAlternate(list.HeadNode);
+             list1 = list.GetNodes();
+            for (int i = 0; i < list1.Count; i++)
+            {
+                Console.Write(list1[i].ToString() + "-->");
+            }
+            Console.WriteLine();
+           // list.AlternateSplit(list.HeadNode);
+
+            list1 = list.GetNodes();
+            for (int i = 0; i < list1.Count; i++)
+            {
+                Console.Write(list1[i].ToString() + "-->");
+            }
+            Console.WriteLine();
+
+            TestLinkedList list3 = new TestLinkedList();
+            list3.AddData(15);
+            list3.AddData(10);
+            list3.AddData(5);
+            TestLinkedList list4 = new TestLinkedList();
+            list4.AddData(20);
+            list4.AddData(3);
+            list4.AddData(2);
+            //Node result = list.MergeSortedLists(list3.HeadNode, list4.HeadNode);
+
+            TestLinkedList list5 = new TestLinkedList();
+            list5.AddData(8);
+            list5.AddData(7);
+            list5.AddData(6);
+            list5.AddData(5);
+            list5.AddData(4);
+            list5.AddData(3);
+            list5.AddData(2);
+            list5.AddData(1);
+
+
+            Node r = list5.ReverseListInKSize(list5.HeadNode, 3);
+            Console.ReadLine();
+        }
+    }
+
+    public class Node
+    {
+        public object data;
+        public Node next;
+    }
+
+    public class TestLinkedList
+    {
+        private Node headNode;
+
+        public Node HeadNode
+        {
+            get
+            {
+                return headNode;
+            }
+        }
+
+        public void AddData(object data)
+        {
+            Node newnode = new Node();
+            newnode.data = data;
+            newnode.next = null;
+
+            if (headNode == null)
+            {
+                headNode = newnode;
+            }
+            else
+            {
+                newnode.next = headNode;
+                headNode = newnode;
+            }
+        }
+
+
+        public ArrayList GetNodes()
+        {
+            ArrayList list = new ArrayList();
+            Node temp = headNode;
+            while (temp != null)
+            {
+                list.Add(temp.data);
+                temp = temp.next;
+            }
+
+            return list;
+        }
+
+        //Time Complexity: O(n) where n is the number of nodes in the given Linked List.
+        public void DeleteAlternateNodes(Node head)
+        {
+            if (head == null)
+                return;
+
+            Node current     = head; //Points to head node
+            Node next = head.next; //Points to next of head node
+
+            while (current != null && next != null)
+            {
+                current.next = next.next; //Points to next of next node
+                current = current.next; //Move current
+                if (current != null)
+                    next = current.next;
+            }
+        }
+
+        public void RecursiveDeleteAlternate(Node head)
+        {
+            if (head == null)
+                return;
+
+            Node next = head.next;
+
+            if (next == null)
+                return;
+
+            head.next = next.next;
+
+             RecursiveDeleteAlternate(head.next);
+        }
+
+        public void AlternateSplit(Node head)
+        {
+            if (head == null)
+                return;
+
+            TestLinkedList list1 = new TestLinkedList();
+            TestLinkedList list2 = new TestLinkedList();
+
+            Node current = head;
+            Node next = head.next;
+
+            while (current != null && next != null)
+            {
+                list1.AddData(current.data);
+                list2.AddData(next.data);
+
+                current = next.next;
+                if (current != null)
+                {
+                    next = current.next;
+                }
+            }
+
+            if (current != null)
+            {
+                list1.AddData(current.data);
+            }
+
+        }
+
+        public Node MergeSortedLists(Node left, Node right)
+        {
+            Node result = null;
+            if (left == null)
+                return right;
+            if (right == null)
+                return left;
+
+            if ((int)left.data <= (int)right.data)
+            {
+                result = left;
+                result.next = MergeSortedLists(left.next, right);
+            }
+
+            else if ((int)left.data > (int)right.data)
+            {
+                result = right;
+                result.next = MergeSortedLists(left, right.next);
+            }
+
+            return result;
+        }
+
+        public Node ReverseListInKSize(Node head, int k)
+        {
+            if (head == null)
+                return null;
+
+            int count = 0;
+            Node temp = head;
+            Node prev = null;
+            Node next = null;
+            while (temp != null && count < k)
+            {
+                //if (count < k)
+                {
+                    count++;
+                    next = temp.next;
+                    temp.next = prev;
+                    prev = temp;
+                    temp = next;
+                }
+            }
+
+            if (next != null)
+                head.next = ReverseListInKSize(next, k);
+
+            return prev;
+        }
+    }
+}
+
